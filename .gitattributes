@@ -1,2 +1,2 @@
-#*.ipynb filter=nbstrip_full
+*.ipynb filter=nbstrip_full
 *.p filter=lfs diff=lfs merge=lfs -text
