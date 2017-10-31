@@ -29,7 +29,7 @@ The main dataset we want to use are the archives Le Temps. After talking with
 Giovanni we understand that these will be available on the cluster in a
 processed from, with the articles available as strings and images. Although
 the archives are enormous, we will only be using the fraction of them that is
-related to voting. A lot of the work of this project will be related to
+related to voting. The raw data mining part of this project will be related to
 string handling and processing. As we will already have the articles available
 in text form we won't have to do any extraction of data from the raw images.
 We'll also need to learn how to work on the
@@ -51,11 +51,11 @@ on the cluster, which should simplify the workflow.
 the datasets.
 02. Filtering and sorting the dataset according to our central theme.
 03. String handling and processing. Coming up with different methods (possibly
-  some machine learning algorithm) to sort and extract data.
+  looking into potential ML algorithms) to sort and extract data.
 04. Looking at votation topics throughout history, visualisation of these
 topics throughout time.
 
 # Questions for TAs
-What format is the twitter dataset in?
-Will we be able to access the cluster, including the datasets, after the
+What format is the Swiss tweets dataset in?
+Will we already be able to access the cluster, including the datasets, after the
 cluster exercise this Thursday?
