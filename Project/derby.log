@@ -1,8 +1,8 @@
 ----------------------------------------------------------------
-Tue Nov 14 22:21:32 CET 2017:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.12.1.1 - (1704137): instance a816c00e-015f-bc68-979e-0000174617b0 
-on database directory /home/mbanga/Epfl/AppliedDataAnalysis/ADA2017_GroupWork/Project/metastore_db with class loader org.apache.spark.sql.hive.client.IsolatedClientLoader$$anon$1@7aa37117 
-Loaded from file:/home/mbanga/Epfl/AppliedDataAnalysis/ADA2017_GroupWork/Project/spark/jars/derby-10.12.1.1.jar
+Tue Nov 21 19:17:26 CET 2017:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.12.1.1 - (1704137): instance a816c00e-015f-dfcc-8ce8-000012fa6290 
+on database directory /home/mbanga/Epfl/AppliedDataAnalysis/ADA2017_GroupWork/Project/metastore_db with class loader org.apache.spark.sql.hive.client.IsolatedClientLoader$$anon$1@257c4bc6 
+Loaded from file:/usr/local/spark/jars/derby-10.12.1.1.jar
 java.vendor=Oracle Corporation
 java.runtime.version=1.8.0_151-8u151-b12-0ubuntu0.16.04.2-b12
 user.dir=/home/mbanga/Epfl/AppliedDataAnalysis/ADA2017_GroupWork/Project
