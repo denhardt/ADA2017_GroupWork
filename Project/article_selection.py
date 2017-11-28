@@ -8,7 +8,7 @@ def article_selection(articles,keywords):
     
     articles_votation = []
 
-    for i in range(len(articles):
+    for i in range(len(articles)):
         if any(word in articles[i].split() for word in keywords): 
             articles_votation.append(articles[i])
-return articles_votation            
+    return articles_votation            
