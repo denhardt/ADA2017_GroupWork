@@ -23,6 +23,7 @@ or during specific periods?
 * Can we link big changes in technological and societal norms to previous votations?
 * How has direct democracy been used? Is it increasing or decreasing? What kind
 of votations is it used for?
+
 Once we have wrangled the data into a useful format we will primarily be using
 Latent Dirichlet Allocation (LDA) in order to cluster articles based on what sub-topics
 they are made up of. Using this unsupervised learning algorithm we will be able to more
