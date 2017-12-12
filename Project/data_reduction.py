@@ -5,7 +5,7 @@ Those functions help to reduce the corpus and documents size
 """
 import re
 
-def votations(corpus, keywords=['votation']):
+def filter_articles(corpus, keywords=['votation']):
     """
     Selects articles in the corpus that contain
     at least one of the keywords.
@@ -16,7 +16,7 @@ def votations(corpus, keywords=['votation']):
             votations.append(article)
     return votations
 
-def summarize_votations(corpus, keywords=['votation'], delimiter='.'):
+def summarize_articles(corpus, keywords=['votation'], delimiter='.'):
     """
     For each publication retains only sentences 
     containing at least one of the keywords 

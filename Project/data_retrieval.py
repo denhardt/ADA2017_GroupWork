@@ -8,7 +8,7 @@ from datetime import datetime
 
 def month_dates(start_date, end_date):
     """
-    defines a list of dates in the mm/yyyy format in the range [start_date, end_date]
+    defines a list of dates in the yyyy/mm format in the range [start_date, end_date]
     """
     f = lambda date: date.month + 12 * date.year
 
@@ -29,7 +29,7 @@ def get_date(article):
 
 def get_articles_in_file(file, start_date, end_date):
     """
-    Retrieves all the articles in the file and store them into a list of strings.
+    Retrieves all the articles in the xml file and store them into a list of strings.
     """
     articles = []  
     for article in file.iter('article'):

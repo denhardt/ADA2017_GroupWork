@@ -31,7 +31,9 @@ def is_french(word):
 def clean(corpus, pos):
     """
     generator function to use spaCy to parse articles,
-    lemmatize the text, and yield sentences
+    lemmatize the text, and yield sentences. Removes all words that aren't
+    french, don't occupy one of the grammatical positions in pos, are stopwords,
+    digits, punctuation, whitespaces, and are like numbers (spacy's like_num)
     """
     
     for parsed_article in nlp.pipe(corpus, 
