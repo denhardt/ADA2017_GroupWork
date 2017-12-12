@@ -42,9 +42,5 @@ def clean(corpus, pos):
         date = parsed_article[0].text
         
         yield (date, ' '.join([token.lemma_ for token in parsed_article if token.pos_ in pos
-                                                                        and not punct_space(token) and is_french(token.text)
-                                                                        and not token.is_stop and not token.is_digit
-                                                                        and not token.like_num]))
-       
-    
-   
+                and not punct_space(token) and is_french(token.text) and not token.is_stop
+                and not token.is_digit and not token.like_num]))
