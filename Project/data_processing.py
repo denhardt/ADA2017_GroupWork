@@ -1,10 +1,11 @@
-# coding: utf-8
+    # coding: utf-8
 
-# need to specify the following params before running:
+    # need to specify the following params before running:
     # start_date =  datetime(1990, 1, 1)
     # end_date = datetime(1990, 1, 31)
     # json_filename = 'test2.json'
-
+# Then 'from datetime import datetime' before'import data_processing' 
+# and call the function process_data
 import os
 import re
 import json
@@ -31,56 +32,59 @@ from data_reduction import *
 from data_cleaning import *
 from lda_helper import *
 
-path = '/Users/robin/GIT/ADA/'
-project_path = '/Users/robin/GIT/ADA/ADA2017_GroupWork/Project/'
-articles_path = os.path.join(path, 'JDG/')
-
-# Time consuming
-if 1 == 1:
-    corpus = get_articles(articles_path, start_date, end_date)
-
-# defines keywords that should be contained in articles
-# to consider them votations
-# keywords = ['votation']
-# todo: check if notebook file .ipynb encoded in UTF
-keywords = ['votation','voter','référendum',' élection','Élection','initiative populaire',
-            # careful with 'élection': includes all articles with sélection
-            # adding a space fixes this: ' élection'
-            'grand conseil','plébiscite','scrutin','suffrage']
-# todo: add removing of keywords from articles
-# get articles related to votations
-corpus = filter_articles(corpus, keywords)
-
-# summarize articles about votations
-corpus = summarize_articles(corpus, keywords)
+def process_data(start_date, end_date, json_filename):
 
 
-# Time consuming !!
+    path = '/Users/robin/GIT/ADA/'
+    project_path = '/Users/robin/GIT/ADA/ADA2017_GroupWork/Project/'
+    articles_path = os.path.join(path, 'JDG/')
+    print('starting parsing')
+    # Time consuming
+    if 1 == 1:
+        corpus = get_articles(articles_path, start_date, end_date)
+    print('# of articles parsed:', len(corpus))
+    # defines keywords that should be contained in articles
+    # to consider them votations
+    # keywords = ['votation']
+    # todo: check if notebook file .ipynb encoded in UTF
+    keywords = ['votation','voter','référendum',' élection','Élection','initiative populaire',
+                # careful with 'élection': includes all articles with sélection
+                # adding a space fixes this: ' élection'
+                'grand conseil','plébiscite','scrutin','suffrage']
+    # todo: add removing of keywords from articles
+    # get articles related to votations
+    corpus = filter_articles(corpus, keywords)
 
-# For each publication ee keep only words that occupy one of
-# the listed grammatical positions in the sentence
-pos=['VERB', 'PROPN', 'NOUN', 'ADJ', 'ADV']
-if 1 == 1:
-    get_ipython().run_line_magic('time', '')
-    cleaned = [(date, lemmas) for date, lemmas in clean(corpus, pos)]
+    # summarize articles about votations
+    corpus = summarize_articles(corpus, keywords)
+    print('# of articles after filtering', len(corpus))
 
-    # retrieve dates
-    dates = [pair[0] for pair in cleaned]
+    # Time consuming !!
 
-    # retrieve articles
-    corpus = [pair[1] for pair in cleaned]
+    # For each publication ee keep only words that occupy one of
+    # the listed grammatical positions in the sentence
+    pos=['VERB', 'PROPN', 'NOUN', 'ADJ', 'ADV']
+    if 1 == 1:
+        get_ipython().run_line_magic('time', '')
+        cleaned = [(date, lemmas) for date, lemmas in clean(corpus, pos)]
+
+        # retrieve dates
+        dates = [pair[0] for pair in cleaned]
+
+        # retrieve articles
+        corpus = [pair[1] for pair in cleaned]
+
+    print('done cleaning')
+    # In[ ]:
+
+    # Storing the articles we lemmatized before in '.json' file.
+    with open(os.path.join(project_path, json_filename), 'w') as file:
+        json.dump(corpus, file)
+
+    print('done corpus to json', json_filename)
+    # In[ ]:
 
 
-# In[ ]:
-
-# Storing the articles we lemmatized before in '.json' file.
-with open(os.path.join(project_path, json_filename), 'w') as file:
-    json.dump(corpus, file)
-
-
-# In[ ]:
-
-
-# Loading articles from .json file
-# with open(os.path.join(project_path, json_filename), 'r') as file:
-#     lemmatized_corpus = json.load(file)
+    # Loading articles from .json file
+    # with open(os.path.join(project_path, json_filename), 'r') as file:
+    #     lemmatized_corpus = json.load(file)
