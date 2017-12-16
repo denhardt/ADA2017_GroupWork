@@ -1,3 +1,5 @@
+### Please download the `Homework+3.html` file for viewing instead of the notebook
+
 # 03 - Interactive Viz
 
 ## Deadline
