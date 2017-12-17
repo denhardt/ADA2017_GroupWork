@@ -31,7 +31,8 @@ def get_articles_in_file(file, start_date, end_date):
     """
     Retrieves all the articles in the xml file and store them into a list of strings.
     """
-    articles = []  
+    articles = []
+    dates = []
     for article in file.iter('article'):
         if article.find('entity') is not None:
             a = ''
@@ -40,7 +41,8 @@ def get_articles_in_file(file, start_date, end_date):
                 for entity in article.iter('entity'):
                     a += entity.findtext('full_text') + ' '
                 articles.append(date.strftime('%d/%m/%Y') + ' ' + a)
-    return articles
+                dates.append(date)
+    return articles, dates
 
 def get_articles(path, start_date, end_date):
     """
@@ -48,13 +50,16 @@ def get_articles(path, start_date, end_date):
     retrieves the articles published between start_date and end_date included
     """
     articles = []
+    dates = []
     for m_date in month_dates(start_date, end_date):
         try:
             file = etree.parse(path + m_date + '.xml')
-            articles.append(get_articles_in_file(file, start_date, end_date))
+            article, art_dates = get_articles_in_file(file, start_date, end_date)
+            articles = articles + article
+            dates = dates + art_dates
         except (FileNotFoundError, IOError):
             pass
-    return [a for file in articles for a in file]
+    return articles, dates
 
 def get_entity_text(file, box_id):
     """
