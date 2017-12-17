@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
-"""some helper functions.
-
-Those functions help in getting articles stored in xml file.
+"""
+some helper functions.
+These functions help in getting articles that are stored in xml file.
 """
 from lxml import etree
 from datetime import datetime
@@ -9,6 +9,8 @@ from datetime import datetime
 def month_dates(start_date, end_date):
     """
     defines a list of dates in the yyyy/mm format in the range [start_date, end_date]
+    Outpus:
+        res - a list of strings
     """
     f = lambda date: date.month + 12 * date.year
 
@@ -23,6 +25,10 @@ def get_date(article):
     """
     This method returns the date of the given article
     in the dd/mm/yyyy format
+    Inputs:
+        article - an lxml.etree._Element
+    Outputs:
+        a datetime.datetime object specifying the age of the article
     """
     str_date = article.find('entity').find('meta').find('issue_date').text
     return datetime.strptime(str_date, '%d/%m/%Y')
@@ -30,6 +36,15 @@ def get_date(article):
 def get_articles_in_file(file, start_date, end_date):
     """
     Retrieves all the articles in the xml file and store them into a list of strings.
+
+    Inputs:
+        file - an lxml.etree._ElementTree object specifying the xml files to be parsed
+        start_date - a datetime.datetime object specifying the start date of articles
+                     to be parsed
+        end_date - a datetime.datetime object specifying the end date of articles
+                   to be parsed
+    Outputs:
+        articles - A list of strings containing the raw text of all articles parsed
     """
     articles = []
     dates = []
@@ -46,8 +61,17 @@ def get_articles_in_file(file, start_date, end_date):
 
 def get_articles(path, start_date, end_date):
     """
-    Iterates through the file hierarchy specified by the path and 
+    Iterates through the file hierarchy specified by the path and
     retrieves the articles published between start_date and end_date included
+
+    Inputs:
+        path - path of the files to be parsed, ex: /path/to/files/JDG/
+        start_date - a datetime.datetime object specifying the start date of articles
+                     to be parsed
+        end_date - a datetime.datetime object specifying the end date of articles
+                   to be parsed
+    Outputs:
+        A list of strings containing the raw text of all articles parsed
     """
     articles = []
     dates = []
