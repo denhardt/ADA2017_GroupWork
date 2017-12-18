@@ -52,22 +52,25 @@ def process_data(start_date, end_date, newsp):
 
         # defines keywords that should be contained in articles
         # to consider them votations
-        # keywords = ['votation']
-        # todo: check if notebook file .ipynb encoded in UTF
         keywords = ['votation','voter','référendum',' élection','Élection','initiative populaire',
                     # careful with 'élection': includes all articles with sélection
                     # adding a space fixes this: ' élection'
                     'grand conseil','plébiscite','scrutin','suffrage']
-        # todo: add removing of keywords from articles
         # get articles related to votations
         corpus = filter_articles(corpus, keywords)
+
+        df = pd.DataFrame(columns=['date', 'newspaper', 'text'])
+        df.text = corpus
+        # Parse all text to strings for cleaning
+        df.text = df.text.apply(lambda x: str(x))
+        df.newspaper = np
+        df.date = df.text.apply(lambda x: parser.parse(x[0:10], dayfirst=True))
 
         # summarize articles about votations
         corpus = summarize_articles(corpus, keywords)
         print('# of articles after filtering', len(corpus))
-
+        #
         # Time consuming !!
-
         # For each publication ee keep only words that occupy one of
         # the listed grammatical positions in the sentence
         pos=['VERB', 'PROPN', 'NOUN', 'ADJ', 'ADV']
@@ -76,23 +79,18 @@ def process_data(start_date, end_date, newsp):
         cleaned = [(date, lemmas) for date, lemmas in clean(corpus, pos)]
 
         # retrieve dates
-        dates = [pair[0] for pair in cleaned]
-
+        # dates = [pair[0] for pair in cleaned]
         # retrieve articles
         corpus = [pair[1] for pair in cleaned]
-
+        df.text = corpus
         print('done cleaning, lemmatizing')
-        # In[ ]:
-        print('Creating DataFrame')
-        df = pd.DataFrame(columns=['date', 'newspaper', 'text'])
-        df.text, df.date = corpus, dates
-        df.newspaper = np
-        df.date = df.date.apply(lambda x: parser.parse(x))
-        df.date = df.date.apply(lambda x: datetime.strftime(x, '%Y-%d-%m %H:%M:%S'))
-        df.date = df.date.apply(lambda x: parser.parse(x))
-        df.set_index('date', inplace=True)
-        df.to_csv('df_'+np+'.csv')
-        print('DataFrame written to file:'+'df_'+np+'.csv')
+
+        df.to_csv('df_'+datetime.strftime(start_date, '%Y')+'_to_'+
+                    datetime.strftime(end_date, '%Y')+'_'+np+'.csv')
+        print('DataFrame written to file:'+'df_'+
+                datetime.strftime(start_date, '%Y')+'_to_'+
+                datetime.strftime(end_date, '%Y')+'_'+np+'.csv')
+        # return df
         # Selection of articles between dates can be done like so:
         # df.date = df.date.apply(lambda x: parser.parse(x))
         # df.set_index=('date', inplace=True)
