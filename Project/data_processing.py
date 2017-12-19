@@ -90,12 +90,3 @@ def process_data(start_date, end_date, newsp):
         # df.date = df.date.apply(lambda x: parser.parse(x))
         # df.set_index=('date', inplace=True)
         # df[datetime(1851,1,24):datetime(1852,8,22)]
-
-        # Storing the articles we lemmatized before in '.json' file.
-        # with open(os.path.join(project_path, json_filename), 'w') as file:
-        #     json.dump(corpus, file)
-        # print('done corpus to json', json_filename)
-
-        # Loading articles from .json file
-        # with open(os.path.join(project_path, json_filename), 'r') as file:
-        #     lemmatized_corpus = json.load(file)

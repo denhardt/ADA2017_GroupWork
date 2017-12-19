@@ -1,5 +1,5 @@
 # Title
-Do we really have the freedom to vote on what we want to?
+Evolution of Direct Democracy in Switzerland
 
 # Abstract
 Our project follows this central question about democracy in Switzerland.
@@ -47,15 +47,16 @@ Both of these datasets are available
 on the cluster, which should simplify the workflow.
 
 # A list of internal milestones up until project milestone 2
-01. Getting familiar with working on the cluster, accessing and manipulating
-the datasets.
-02. Filtering and sorting the dataset according to our central theme.
-03. String handling and processing. Coming up with different methods (possibly
-  looking into potential ML algorithms) to sort and extract data.
-04. Looking at votation topics throughout history, visualisation of these
-topics throughout time.
+01. ~~Getting familiar with working on the cluster, accessing and manipulating
+the datasets.~~
+02. ~~Filtering and sorting the dataset according to our central theme.~~
+03. ~~String handling and processing. Coming up with different methods (possibly
+  looking into potential ML algorithms) to sort and extract data.~~
+04. ~~Looking at votation topics throughout history, visualisation of these
+topics throughout time.~~
 
-# Questions for TAs
-What format is the Swiss tweets dataset in?
-Will we already be able to access the cluster, including the datasets, after the
-cluster exercise this Thursday?
+# Group member contributions
+Pierre: Suggestion of LDA algorithm, initial implementation of data pipeline
+Robin: Improvements to data pipeline. Performing all data reduction
+and cleaning steps. Formatting all data into DataFrames. Data visualisation notebook
+Youssef: Writing up the report
