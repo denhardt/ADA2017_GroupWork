@@ -55,8 +55,13 @@ the datasets.~~
 04. ~~Looking at votation topics throughout history, visualisation of these
 topics throughout time.~~
 
+#Milestone3:
+
+
+
 # Group member contributions
-Pierre: Suggestion of LDA algorithm, initial implementation of data pipeline
+Pierre: Suggestion and implementation of LDA algorithm, initial implementation of data pipeline, implementation of
+data handling, data reduction and data cleaning methods. Proposes a vizualisation. Writting up the report. Code comments 
 Robin: Improvements to data pipeline. Performing all data reduction
 and cleaning steps. Formatting all data into DataFrames. Data visualisation notebook
-Youssef: Writing up the report
+Youssef: Work on LDA algotithm,Suggestion and implementation of the Naive Selection using keywords Data Selection and the implementation of data pipeline and Writing up the report.
