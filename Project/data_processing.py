@@ -8,23 +8,16 @@ import pandas as pd
 from lxml import etree
 from datetime import datetime
 from dateutil import parser
-# NLP tools used:
-import fr_core_news_sm
-import spacy
-import enchant
-# from gensim.models import Phrases
-# from gensim.models.word2vec import LineSentence
-# from gensim.models.ldamulticore import LdaMulticore
-# from gensim.corpora import Dictionary, MmCorpus
-# import pyLDAvis
-# import pyLDAvis.gensim
 import warnings
+# NLP tools used:
+import spacy
+import fr_core_news_sm
+import enchant
 # Helper functions written for various stages of data retrieval, reduction,
 # cleaning and processing
 from data_retrieval import *
 from data_reduction import *
 from data_cleaning import *
-# from lda_helper import *
 
 def process_data(start_date, end_date, newsp):
     """
@@ -56,26 +49,28 @@ def process_data(start_date, end_date, newsp):
                     # careful with 'élection': includes all articles with sélection
                     # adding a space fixes this: ' élection'
                     'grand conseil','plébiscite','scrutin','suffrage']
-        # get articles related to votations
+        # get articles related to votations, only retains articles that contain
+        # at least one keyword
         corpus = filter_articles(corpus, keywords)
 
+        # storing these articles in a DataFrame
         df = pd.DataFrame(columns=['date', 'newspaper', 'text'])
         df.text = corpus
-        # Parse all text to strings for cleaning
+        # parse all text to strings for cleaning
         df.text = df.text.apply(lambda x: str(x))
         df.newspaper = np
+        # parsing dates
         df.date = df.text.apply(lambda x: parser.parse(x[0:10], dayfirst=True))
 
-        # summarize articles about votations
+        # summarize articles about votations, this only keeps the 2 sentences
+        # before and after the one that contains one of the keywords
         corpus = summarize_articles(corpus, keywords)
         print('# of articles after filtering', len(corpus))
-        #
-        # Time consuming !!
-        # For each publication ee keep only words that occupy one of
+
+        # For each publication we keep only words that occupy one of
         # the listed grammatical positions in the sentence
         pos=['VERB', 'PROPN', 'NOUN', 'ADJ', 'ADV']
 
-        # get_ipython().run_line_magic('time', '')
         cleaned = [(date, lemmas) for date, lemmas in clean(corpus, pos)]
 
         # retrieve dates
@@ -99,7 +94,6 @@ def process_data(start_date, end_date, newsp):
         # Storing the articles we lemmatized before in '.json' file.
         # with open(os.path.join(project_path, json_filename), 'w') as file:
         #     json.dump(corpus, file)
-        #
         # print('done corpus to json', json_filename)
 
         # Loading articles from .json file
