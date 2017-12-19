@@ -55,7 +55,7 @@ the datasets.~~
 04. ~~Looking at votation topics throughout history, visualisation of these
 topics throughout time.~~
 
-#Milestone3:
+
 
 
 
