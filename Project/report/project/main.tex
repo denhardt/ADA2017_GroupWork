@@ -98,17 +98,21 @@ political flow.
 
 \section{Dataset}
 
-We seek to analyse "Le Temps digital archives and data". This dataset consists of articles representing two centuries of informations provided by two newspapers, namely 'Le journal de Gèneve' and 'La Gazette de Lausanne'. These are ancestors of today well-known Swiss newspaper 'Le Temps' whose publications are written in the French language.
+We seek to analyze "Le Temps digital archives and data". This dataset consists of articles representing two centuries of informations provided by two newspapers, namely 'Le journal de Gèneve' and 'La Gazette de Lausanne'. These are ancestors of today well-known Swiss newspaper 'Le Temps' whose publications are written in the French language.
 
 The dataset at hand is very well organized. It is easy to navigate and find articles for any given time
 period as publications are gathered with respect to their release month. Hence for each newspaper all articles published during a specific month of a given year are all stored in the same file. The data structure used in each of those files is xml.
 
-Specifically the dataset consist of 4'335 xml files for a total of () articles. The period of time covered by those articles ranges from February 1798 to February 1998.
+Unfortunately some texts are unreadable as they contain a bunch of symbols or special characters. This observation mostly arises in old publications. This may be caused by the scanner, used to create the digital dataset, not adapted for those fonts. Or the archive being in a seriously damaged state. As an example, the following articles issued on February 1798:\\
+\\
+\textit{[...] JLEfauteuil c \$ t vacc'ant, et l'Assemblée s'ôccûpé * de la nomination d'un nouveau Président. Une immense majoritS y rappelle le C. Glayre " J'a * vois" besoin de forces [...]}\\
+\\
+Specifically the dataset consists of 4'335 xml files for a total of () articles. The period of time covered by those articles ranges from February 1798 to February 1998.
 
 \section{Librabries}
 
 We use differrent libraries
-\section{Pipeline}
+\section{Data preparation}
 
 Naturally we apply tools related to the field of natural language processing to acquire our results. More
 precisely we are interested in topic modeling using unsupervised learning. It has been essential to develop
@@ -122,28 +126,41 @@ libraries. For each article in the files we save only the text and the date of p
 It is important to mention here that articles inside the xml structure do not consistently respond the natural classification by theme as we may except. As an example let's consider the following publication issued on 04 September 1993:\\
 
 \textit{\textbf{QUOTIDIENNES JUSTICE} Cadres du bâtiment acquittés Le Tribunal correctionnel de Lausanne a acquitté jeudi deux anciens cadres [...] \textbf{CONJONCTURE} Vaud toujours malade La marche des affaires de l'industrie vaudoise est anémique. L'entrée des commandes [...]\textbf{VOTATIONS} Deux oui et trois non libéraux Réunis à Lausanne, les délégués du Parti libéral vaudois ont pris position sur les cinq objets soumis à la votation populaire des 26 et 27 septembre prochains. [...] \textbf{PAYSANS DE MONTAGNE} Aide du gouvernement Face à la grogne suscitée chez les paysans de montagne [...]}\\
-The entire text is considered a single entity inside the corresponding xml file altough we can clearly discriminate four different topics merely related to each others, namely 'Quotidiennes de Justice', 'Conjoncture', 'Votation' and 'Paysan de montagne'.   
+
+The entire text is considered a single entity inside the corresponding xml file altough we can clearly discriminate four different topics merely related to each others, namely 'Quotidiennes de Justice', 'Conjoncture', 'Votation' and 'Paysan de montagne'. This remark motivates a choice we explain in the next subsection.
 
 \subsection{data reduction}
 
-In order to discriminate articles related to votations from others we take a very simple yet sensitive approach. We argue that it is very unlikely that any publication related to Swiss votations does not contain at least one word in a set of predefined words. We mention here those words we consider as strongly related to votations: (). Those words are obtained based on our personal intuition. Of course, One can argue about the accuracy of such a method. We may certainly generate false positive or discard relevant articles. Yet the sample size we obtain with this first process appears to be large enough to capture the information we are interested in.
+In order to discriminate articles related to votations from others we take a very simple yet sensitive approach. We argue that it is very unlikely that any publication related to Swiss votations does not contain at least one word in a set of predefined words. We mention here those words we consider as strongly related to votations: (). Those words are obtained based on our personal intuition. Of course, One can argue about the accuracy of such a method. We may certainly generate false positive or discard relevant articles. Yet the sample size we obtain with this first process appears to be large enough to capture the information we are interested in. For the unique year 1990 this approach allows us to extract more than 3000 publications.
 \\
-Furthermore, we make an assumption that reduces the length of any given publication related to votations. As mentionned earlier the goal is to identify and classify highlevel votation subjects. By visual inspection, we notice this information is usually closed to one of the keywords showed earlier. 
+Furthermore, we make an assumption that reduces the length of any given publication related to votations. As mentionned earlier the goal is to identify and classify votation subjects. By visual inspection, we notice this information is usually closed to one of the keywords showed earlier. 
 Let's consider the following extract of a publication issued on 04 September 1993:\\
+\\
 \textit{VOTATIONS Deux oui et trois non libéraux Réunis à Lausanne, les délégués du Parti libéral vaudois ont pris position sur les cinq objets soumis à la \textbf{votation} populaire des 26 et 27 septembre prochains. C'est ainsi qu'ils ont accepté le rattachement du district de Laufon à Bâle-Campagne et l'arrêté fédéral urgent en matière \textbf{d'assurance-maladie}. En revanche, l'arrêté fédéral contre l'usage abusif \textbf{d'armes} et l'initative \textbf{« Pour un jour de Fête national férié »} n'ont pas trouvé grâce à leurs yeux. Pas plus d'ailleurs que l'arrêté fédéral urgent en matière \textbf{d'assurance chômage}, jugé trop coûteux pour l'économie.}\\
 
-This extract represents approximately twenty percent of the length, in terms of number of characters, of the original. Yet it is more than enough to visually identify the subject, highlited in bold, of the votation. More importantly, the remaining part of the article is not related 
-As a consequence we retain only sentences containing the keyword 'votation' and its closest neighboors, namely the preciding and following sentences. Again we are aware that this filtering method may discard relevant information. More importantly, this assumption may reveal disastruous for our results if it appears to be erroneous.
+This extract is part of the article presented in the previous subsection. It represents approximately twenty percent of the original in terms of number of characters. Yet it is more than enough to visually capture the subjects, highlighted in bold, of the votations. More importantly, the remaining part of the article does not provide any insight for the information we are looking for. We can even argue that it is pure noise that needs to be discarded. As a consequence we retain only sentences containing one of our defined keywords together with its closest neighboors, namely the preceding and following sentences. Again we are aware that this filtering method may discard relevant information. More importantly, this assumption may reveal disastruous for our results if it appears to be erroneous.
 
-Manuscripts must be in two-column format.  Exceptions to the
-two-column format include the title, authors' names and complete
-addresses, which must be centered at the top of the first page, and
-any full-width figures or tables (see the guidelines in
-Subsection~\ref{ssec:first}). {\bf Type single-spaced.}  Start all
-pages directly under the top margin. See the guidelines later
-regarding formatting the first page.
 
-\subsection{Format of Electronic Manuscript}
+\subsection{Data cleaning}
+
+At this stage we have stored in an array articles related to votations. Our objective is now to pre-process those publication before running the unsupervised learning method. The pipeline we use for this task can be summarized by the following schema
+\\
+\\
+\textit{remove non French words $\rightarrow$ lemmatize $\rightarrow$ remove stop words $\rightarrow$ remove digits}
+\\
+
+To remove non French words we use a dictionary proposed by the NLTK library. The lemmatization step is resolved through Spacy lemmatizer. Spacy library also proposes functionalities to easily detect and remove stop words and digits. All those actions put together return a cleaner corpus that can be processed more efficiently at later stages.
+
+\section{Data processing}
+
+The pre-processing stages described in the previous section can now be exploited to derive results. As mentioned earlier the task we are interested in is named topic modeling. The problem constraints forces us to use an unsupervised learning method for clustering known as Latent Dirichlet Allocation (LDA). This choice is motivated by discussions with pairs and practical experiment results observed in the literature.
+Based on observations, other clustering methods such as K-means or DBSCAN don't appear to be interesting enough alternatives. 
+
+\subsection{Latent Dirichlet allocation}
+
+According to Wikipedia, latent Dirichlet allocation (LDA) is a generative statistical model that allows sets of observations to be explained by unobserved groups that explain why some parts of the data are similar. 
+From a practical point of view, LDA represents documents as mixtures of topics that spit out words with certain probabilities. Documents are interpreted using the bag-of-words representation. LDA then tries to backtrack from the documents to find a set of topics that are likely to have generated the collection.
+
 \label{sect:pdf}
 
 For the production of the electronic manuscript you must use Adobe's
