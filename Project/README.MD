@@ -55,8 +55,18 @@ the datasets.~~
 04. ~~Looking at votation topics throughout history, visualisation of these
 topics throughout time.~~
 
+# Milestone3:
+
+The notebook 'Milestone3' is better viewed with nbviewer:
+[http://nbviewer.jupyter.org/github/robinde/ADA2017_GroupWork/blob/master/Project/Milestone%203.ipynb]
+
+
+
 # Group member contributions
-Pierre: Suggestion of LDA algorithm, initial implementation of data pipeline
+Pierre: Suggestion and implementation of LDA algorithm, initial implementation of data pipeline, implementation of
+data handling, data reduction and data cleaning methods. Proposed an initial vizualisation. Writting up the report. Code comments.
+
 Robin: Improvements to data pipeline. Performing all data reduction
-and cleaning steps. Formatting all data into DataFrames. Data visualisation notebook
-Youssef: Writing up the report
+and cleaning steps. Formatting all data into DataFrames. Data visualisation notebook.
+
+Youssef: Work on LDA algotithm,Suggestion and implementation of the Naive Selection using keywords Data Selection and the implementation of data pipeline and Writing up the report.
