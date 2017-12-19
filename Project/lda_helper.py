@@ -31,15 +31,18 @@ def articles_from_topic(lda, bow_corpus, corpus, topic):
     with a given topic.
     """
     assert len(bow_corpus) == len(corpus)
-    nb_topics = len(lda.get_topics())
-    
+    nb_topics = lda.num_topics
+
     documents = []
     if 0 <= topic < nb_topics:
         k = 0
         for bow_article in bow_corpus:
             dist = lda.get_document_topics(bow_article, minimum_probability=0)
             dist = [p[1] for p in dist]
-            idx_max = dist.index(max(dist))
+            idx_max = dist.index(max(dist)) # what?! this isn't the ID of the topic
+            # the id of the topic was the fist value of each tuple in dist (cf
+            # documentation get_document_topics() ), which has been discarded
+            # on line 41
             if idx_max == topic:
                 documents.append(corpus[k])
             k += 1
